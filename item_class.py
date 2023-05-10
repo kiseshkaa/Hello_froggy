@@ -11,3 +11,5 @@ class Item(pg.sprite.Sprite):
     def update(self, screen : pg.Surface) -> None:
         self.button.update(screen)
         self.text.update()
+
+#comment
