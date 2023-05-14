@@ -31,3 +31,8 @@ def get_coins() -> str:
     coin = file.readline()
     file.close()
     return coin
+
+def set_coins(coins : int) -> None:
+    file = open('coins.txt', 'w')
+    file.write(str(coins))
+    file.close()
