@@ -25,7 +25,12 @@ plate_rect = plate.get_rect(centery=500)
 finish_points = Points()
 frog = Frog()
 
-item = Item((100, 150), 100, 'images/coin.png')
+item1 = Item((200, 150), 1, 'images/coin.png')
+item2 = Item((400, 150), 200, 'images/coin.png')
+item3 = Item((200, 300), 300, 'images/coin.png')
+item4 = Item((400, 300), 400, 'images/coin.png')
+item5 = Item((200, 450), 500, 'images/coin.png')
+item6 = Item((400, 450), 600, 'images/coin.png')
 
 main_points = Points()
 coins = Coins()
@@ -61,6 +66,8 @@ def update_records():
             records.add(a)
 
 update_records()
+
+item_group = pg.sprite.Group(item1, item2, item3, item4, item5, item6)
 
 clouds = pg.sprite.Group(Cloud(), Cloud(), Cloud(), Cloud(), Cloud(),
                          Cloud())
@@ -133,7 +140,7 @@ def run_shop(run : bool) -> None:
     menu_music.stop()
     while run:
         screen.fill("seashell1")
-        item.update(screen)
+        item_group.update(screen)
         for i in pg.event.get():
             if i.type == pg.KEYDOWN and i.key == pg.K_ESCAPE or button_exit.ispressed():
                 run = False
