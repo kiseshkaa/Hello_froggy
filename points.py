@@ -33,6 +33,8 @@ class Text(pg.sprite.Sprite):
     def update(self, text = ''):
         if text:
             self.image = self.font.render(str(text), True, 'black')
+        else:
+            self.image = self.font.render(self.text, True, 'black')
         pg.display.get_surface().blit(self.image, self.rect)
 
 
