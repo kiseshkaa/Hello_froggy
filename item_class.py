@@ -10,19 +10,26 @@ class Item(pg.sprite.Sprite):
         self.text = Text( f'цена : {price}', (self.button.rect.centerx, self.button.rect.bottom + 25))
         self.price = price
         self.bought = False
+        self.dressed = False
 
 
     def buy(self):
         if self.button.ispressed() and int(get_coins()) >= self.price and not self.bought:
-            self.text = Text('получено!', (self.button.rect.centerx, self.button.rect.bottom + 25))
+            self.text.text = 'доступно'
             set_coins(int(get_coins()) - self.price)
             self.bought = True
 
-
+    def put_on(self):
+        if self.bought and self.button.ispressed() and not self.dressed and self.button.timer == 60:
+            self.dressed = True
+            self.text.text = 'надето'
+        if self.button.timer < 60 and self.bought:
+            self.button.timer += 1
 
     def update(self, screen : pg.Surface) -> None:
         self.button.update(screen)
         self.text.update()
         self.buy()
+        self.put_on()
 
 #comment
