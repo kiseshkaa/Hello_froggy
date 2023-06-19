@@ -3,11 +3,12 @@ from player import Player
 from cloud import Cloud
 from bonuses import JetPack, Coin
 from random import choice
-from support import get_highest_cloud
+from support import get_highest_cloud, Saver
 from bird import Bird
 from button import Button, SoundButton
 from inscription import Inscription, CInscription
 from item import Item
+from src.records_board import RecordsBoard
 
 pg.init()
 
@@ -15,6 +16,7 @@ pg.init()
 class Game:
     sc_size = (600, 600)
     menu_sound = pg.mixer.Sound('../sounds/menu.mp3')
+    menu_sound.set_volume(0.1)
 
     def __init__(self):
 
@@ -52,7 +54,8 @@ class Game:
 
         # Inscriptions
         self.title = Inscription('Hello, Froggy', 28, (300, 200))
-        self.coins_inscription = CInscription('Монеты:', 0, 20, (500, 400))
+        self.coins_inscription = CInscription('Монеты:', Saver.get_data('coins'), 20, (500, 400))
+        self.records_insription = RecordsBoard()
 
         # Shop
         self.items = pg.sprite.Group()
@@ -88,6 +91,8 @@ class Game:
                 Bird(self.screen, self.birds)
 
             if self.player.is_dead:
+                Saver.save_point(self.player.max_height)
+                self.records_insription.refresh()
                 break
 
             self.points_inscription.change(self.player.max_height)
@@ -98,6 +103,7 @@ class Game:
 
     def run_menu(self):
         self.menu_sound.play(-1)
+        self.coins_inscription.change(Saver.get_data('coins'))
         while True:
             self.screen.fill("seashell1")
             self.title.update()
@@ -107,11 +113,12 @@ class Game:
                     exit()
 
             self.buttons.update(self.screen)
+            self.records_insription.update(self.screen)
 
             if self.play_button.is_pressed():
                 break
             elif self.records_button.is_pressed():
-                print(2)
+                self.records_insription.vision = not self.records_insription.vision
             elif self.exit_button.is_pressed():
                 exit()
             elif self.shop_button.is_pressed():
