@@ -1,5 +1,6 @@
 import pygame as pg
 from bonuses import JetPack, Coin
+from support import Saver
 
 pg.init()
 
@@ -70,7 +71,7 @@ class Player(pg.sprite.Sprite):
                 self.start_speed = 20
                 self.time = 0
             elif isinstance(bonuses.sprites()[0], Coin):
-                pass
+                Saver.save_coins(Saver.get_data('coins') + 1)
             bonuses.sprites()[0].kill()
 
     # +

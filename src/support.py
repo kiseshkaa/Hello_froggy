@@ -36,13 +36,10 @@ class Saver:
     @staticmethod
     def get_data(data_type=''):
         try:
-            with open(f'data/{data_type}.txt') as value:
-                return json.load(value)
+            with open(f'data/{data_type}.txt') as file:
+                return json.load(file)
         except FileNotFoundError:
             return None
-
-Saver.save_coins(15)
-print(Saver.get_data('records'))
 
 
 def get_highest_cloud(screen: pg.Surface, clouds: pg.sprite.Group):

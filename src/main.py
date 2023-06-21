@@ -148,6 +148,7 @@ class Game:
 
             pg.display.update()
             self.FPS.tick(60)
+        self.coins_inscription.change(Saver.get_data('coins'))
 
     def show_results(self):
         while True:
