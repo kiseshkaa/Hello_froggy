@@ -12,6 +12,13 @@ class Saver:
             json.dump(data, file)
 
     @staticmethod
+    def save_suits(number, *statuses):
+        suits = Saver.get_data('suits')
+        suits[str(number)] = statuses
+        with open('data/suits.txt', 'w') as file:
+            json.dump(suits, file)
+
+    @staticmethod
     def save_point(data: int):
         # Add data in records
         records = Saver.get_data('records')
@@ -40,10 +47,6 @@ class Saver:
                 return json.load(value)
         except FileNotFoundError:
             return None
-
-Saver.save_coins(15)
-print(Saver.get_data('records'))
-
 
 def get_highest_cloud(screen: pg.Surface, clouds: pg.sprite.Group):
     highest_cloud = None

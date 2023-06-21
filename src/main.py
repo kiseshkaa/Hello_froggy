@@ -91,6 +91,7 @@ class Game:
                 Bird(self.screen, self.birds)
 
             if self.player.is_dead:
+                self.coins_inscription.change(Saver.get_data('coins'))
                 Saver.save_point(self.player.max_height)
                 self.records_insription.refresh()
                 break
@@ -148,6 +149,7 @@ class Game:
 
             pg.display.update()
             self.FPS.tick(60)
+        self.coins_inscription.change(Saver.get_data('coins'))
 
     def show_results(self):
         while True:
