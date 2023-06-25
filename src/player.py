@@ -106,7 +106,6 @@ class Player(pg.sprite.Sprite):
         self.jump(clouds)
         self.animate()
         self.take_bonus(bonuses)
-        pg.draw.rect(screen, 'red', self.rect, 2)
         screen.blit(self.image, self.rect)
         if self.rect.top > screen.get_size()[1]:
             self.is_dead = True
