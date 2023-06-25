@@ -37,6 +37,7 @@ class Item(pg.sprite.Sprite):
             self.inscription.text = 'доступно'
             self.inscription.change()
             self.bought = True
+            self.refresh()
 
     def put_on(self):
         if not self.dressed and self.button.is_pressed():
@@ -44,18 +45,22 @@ class Item(pg.sprite.Sprite):
             self.inscription.text = 'надето'
             self.inscription.change()
             self.dressed = True
+            self.refresh()
 
     def pull_off(self):
         if self.dressed and self.button.is_pressed():
             self.dressed = False
             self.inscription.text = 'доступно'
             self.inscription.change()
-            print(1)
+            self.refresh()
 
     def change_status(self):
         self.buy()
         self.put_on()
         self.pull_off()
+
+    def refresh(self):
+        Saver.save_suits(self.number, self.bought, self.dressed)
 
     @classmethod
     def pull_off_all(cls):
@@ -63,6 +68,7 @@ class Item(pg.sprite.Sprite):
             item.dressed = False
             item.inscription.text = 'доступно'
             item.inscription.change()
+            cls.refresh(item)
 
 
     def update(self, screen: pg.Surface) -> None:

@@ -6,10 +6,22 @@ class Saver:
     purchased_suits = {1: False, 2: False, 3: False, 4: False, 5: False, 6: False}
     dressed_suit = None
 
-    @ staticmethod
+    @staticmethod
     def save_coins(data: int):
         with open('data/coins.txt', 'w') as file:
             json.dump(data, file)
+
+    @staticmethod
+    def save_suits(number, bought, dressed):
+        suits = Saver.get_data('suits')
+        suits[str(number)] = [bought, dressed]
+        with open('data/suits.txt', 'w') as file:
+            json.dump(suits, file)
+
+
+
+
+
 
     @staticmethod
     def save_point(data: int):
