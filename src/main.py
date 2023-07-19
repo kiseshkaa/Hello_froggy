@@ -17,6 +17,8 @@ class Game:
     sc_size = (600, 600)
     menu_sound = pg.mixer.Sound('../sounds/menu.mp3')
     menu_sound.set_volume(0.1)
+    shop_sound = pg.mixer.Sound('../sounds/shop_music.mp3')
+    shop_sound.set_volume(0.1)
 
     def __init__(self):
 
@@ -54,8 +56,9 @@ class Game:
 
         # Inscriptions
         self.title = Inscription('Hello, Froggy', 28, (300, 200))
-        self.coins_inscription = CInscription('Монеты:', Saver.get_data('coins'), 20, (500, 400))
+        self.coins_inscription = CInscription('Монеты:', Saver.get_data('coins'), 20, (480, 400))
         self.records_insription = RecordsBoard()
+        self.shop_coins_inscription = CInscription('Монеты:', Saver.get_data('coins'), 28, (275, 60))
 
         # Shop
         self.items = pg.sprite.Group()
@@ -122,18 +125,22 @@ class Game:
             elif self.exit_button.is_pressed():
                 exit()
             elif self.shop_button.is_pressed():
+                self.menu_sound.stop()
                 self.run_shop()
+                self.menu_sound.play(-1)
             elif self.sound_button.is_pressed():
                 self.menu_sound.set_volume(self.sound_button.volume_switch)
+
 
             pg.draw.rect(self.screen, 'seashell3', self.border, 5, 10)
 
             pg.display.update()
             self.FPS.tick(60)
-
         self.menu_sound.stop()
 
+
     def run_shop(self):
+        self.shop_sound.play(-1)
         while True:
             self.screen.fill("seashell1")
             for event in pg.event.get():
@@ -142,8 +149,11 @@ class Game:
 
             self.items.update(self.screen)
             self.exit_button.update(self.screen)
+            self.shop_coins_inscription.update()
+            self.shop_coins_inscription.change(Saver.get_data('coins'))
 
             if self.exit_button.is_pressed() or pg.key.get_pressed()[pg.K_ESCAPE]:
+                self.shop_sound.stop()
                 break
 
             pg.display.update()

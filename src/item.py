@@ -27,7 +27,7 @@ class Item(pg.sprite.Sprite):
         elif self.dressed:
             self.inscription.text = 'надето'
             self.inscription.change()
-        self.check_mark = pg.image.load('../images/frog/frog_0.png')
+        self.check_mark = pg.image.load('../images/chek_mark.png')
         self.check_mark_rect = self.check_mark.get_rect(center=(self.button.rect.right, self.button.rect.bottom - 20))
 
     def buy(self):
@@ -73,8 +73,8 @@ class Item(pg.sprite.Sprite):
 
     def update(self, screen: pg.Surface) -> None:
         self.change_status()
+        self.button.update(screen)
         if self.dressed:
             screen.blit(self.check_mark, self.check_mark_rect)
-        self.button.update(screen)
         self.inscription.update()
 

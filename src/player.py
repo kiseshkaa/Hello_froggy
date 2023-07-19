@@ -10,14 +10,28 @@ class Player(pg.sprite.Sprite):
     jumping_sound.set_volume(0.2)
     falling_sound = pg.mixer.Sound('../sounds/falling_sound.mp3')
     falling_sound.set_volume(0.2)
+    suits = {'1': (pg.image.load('../images/frog/frog_0.png'),
+                   pg.image.load('../images/frog/frog_1.png'),
+                   pg.image.load('../images/frog/frog_2.png'),
+                   pg.transform.rotate(pg.image.load('../images/frog/frog_3.png'), 180)),
+             '2': (pg.image.load('../images/frog/birthday_suit/birthday_frogsuit_1.png'),
+                   pg.image.load('../images/frog/birthday_suit/birthday_frogsuit_2.png'),
+                   pg.image.load('../images/frog/birthday_suit/birthday_frogsuit_3.png'),
+                   pg.transform.rotate(pg.image.load('../images/frog/birthday_suit/birthday_frogsuit_4.png'), 180))
+                   }
+
+    def __new__(cls, *args, **kwargs):
+        player = object.__new__(cls)
+        statuses = Saver.get_data('suits')
+        player.animate_images = None
+        for key, status in statuses.items():
+            if status[1]:
+                player.animate_images = cls.suits[key]
+        return player
+
 
     def __init__(self, sc_size):
         super().__init__()
-        self.animate_images = (pg.image.load('../images/frog/frog_0.png'),
-                               pg.image.load('../images/frog/frog_1.png'),
-                               pg.image.load('../images/frog/frog_2.png'),
-                               pg.transform.rotate(pg.image.load('../images/frog/frog_2.png'), 180)
-                               )
         self.image = self.animate_images[1]
         self.rect = self.image.get_rect(centerx=sc_size[0] // 2, centery=sc_size[1] // 2)
 
@@ -90,15 +104,7 @@ class Player(pg.sprite.Sprite):
                 self.is_fallen = True
 
     def refresh(self, sc_size):
-        self.is_dead = False
-        self.is_fallen = False
-        self.rect = self.image.get_rect(centerx=sc_size[0] // 2, centery=sc_size[1] // 2)
-        self.height = 0
-        self.max_height = 0
-        self.time = 0
-        self.speed = 0
-        self.start_speed = 10
-        self.boost = 10
+        self.__init__(sc_size)
 
     def update(self, screen, clouds, bonuses):
         self.move()

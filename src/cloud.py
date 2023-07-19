@@ -38,6 +38,7 @@ class Cloud(pg.sprite.Sprite):
 
     def rotate(self):
         if self.angle <= 360:
+            #перевод градусов в радианы
             angle = self.angle * (math.pi / 180)
             self.rect.x += math.cos(angle)
             self.rect.y += math.sin(angle)

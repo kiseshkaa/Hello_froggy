@@ -30,7 +30,6 @@ class Bird(pg.sprite.Sprite):
     def update(self, screen, player) -> None:
         self.rect.y += player.speed
         screen.blit(self.image, self.rect)
-        pg.draw.rect(screen, 'red', self.rect, 2)
         self.fly()
         self.hit_player(player)
         if self.rect.right < 0 or self.rect.left > screen.get_size()[0] or self.rect.top > screen.get_size()[1]:

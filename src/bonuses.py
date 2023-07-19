@@ -11,7 +11,6 @@ class Bonus(pg.sprite.Sprite):
     def update(self, screen, spawn):
         self.rect.midbottom = spawn.rect.midtop
         screen.blit(self.image, self.rect)
-        pg.draw.rect(screen, 'red', self.rect, 2)
         if not spawn.groups():
             self.kill()
 
