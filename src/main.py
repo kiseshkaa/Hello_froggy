@@ -72,7 +72,7 @@ class Game:
     def play(self):
         self.player.refresh(self.sc_size)
         while True:
-            self.screen.fill('grey')
+            self.screen.fill((94, 178, 230))
             self.result_inscription.change(self.player.max_height)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -129,7 +129,10 @@ class Game:
                 self.run_shop()
                 self.menu_sound.play(-1)
             elif self.sound_button.is_pressed():
-                self.menu_sound.set_volume(self.sound_button.volume_switch)
+                if self.sound_button.volume_switch:
+                    self.menu_sound.set_volume(0.1)
+                else:
+                    self.menu_sound.set_volume(0)
 
 
             pg.draw.rect(self.screen, 'seashell3', self.border, 5, 10)
@@ -153,6 +156,7 @@ class Game:
             self.shop_coins_inscription.change(Saver.get_data('coins'))
 
             if self.exit_button.is_pressed() or pg.key.get_pressed()[pg.K_ESCAPE]:
+                self.player.change_suit()
                 self.shop_sound.stop()
                 break
 
@@ -162,7 +166,7 @@ class Game:
 
     def show_results(self):
         while True:
-            self.screen.fill('grey')
+            self.screen.fill((94, 178, 230))
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     exit()
