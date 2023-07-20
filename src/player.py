@@ -22,11 +22,8 @@ class Player(pg.sprite.Sprite):
 
     def __new__(cls, *args, **kwargs):
         player = object.__new__(cls)
-        statuses = Saver.get_data('suits')
         player.animate_images = None
-        for key, status in statuses.items():
-            if status[1]:
-                player.animate_images = cls.suits[key]
+        player.change_suit()
         return player
 
 
@@ -105,6 +102,12 @@ class Player(pg.sprite.Sprite):
 
     def refresh(self, sc_size):
         self.__init__(sc_size)
+
+    def change_suit(self):
+        statuses = Saver.get_data('suits')
+        for key, status in statuses.items():
+            if status[1]:
+                self.animate_images = self.suits[key]
 
     def update(self, screen, clouds, bonuses):
         self.move()
