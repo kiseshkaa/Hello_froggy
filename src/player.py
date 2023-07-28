@@ -18,14 +18,13 @@ class Player(pg.sprite.Sprite):
                    pg.image.load('../images/frog/birthday_suit/birthday_frogsuit_2.png'),
                    pg.image.load('../images/frog/birthday_suit/birthday_frogsuit_3.png'),
                    pg.transform.rotate(pg.image.load('../images/frog/birthday_suit/birthday_frogsuit_4.png'), 180))
-                   }
+             }
 
     def __new__(cls, *args, **kwargs):
         player = object.__new__(cls)
         player.animate_images = None
         player.change_suit()
         return player
-
 
     def __init__(self, sc_size):
         super().__init__()
@@ -118,4 +117,3 @@ class Player(pg.sprite.Sprite):
         screen.blit(self.image, self.rect)
         if self.rect.top > screen.get_size()[1]:
             self.is_dead = True
-
