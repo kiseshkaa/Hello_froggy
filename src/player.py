@@ -31,6 +31,11 @@ class Player(pg.sprite.Sprite):
         self.image = self.animate_images[1]
         self.rect = self.image.get_rect(centerx=sc_size[0] // 2, centery=sc_size[1] // 2)
 
+        self.coin_sound = pg.mixer.Sound('../sounds/coin_sound.mp3')
+        self.coin_sound.set_volume(0.2)
+        self.jetpack_sound = pg.mixer.Sound('../sounds/jetpack_sound.mp3')
+        self.jetpack_sound.set_volume(0.3)
+
         self.time = 0
         self.speed = 0
         self.start_speed = 10
@@ -78,9 +83,11 @@ class Player(pg.sprite.Sprite):
     def take_bonus(self, bonuses):
         if self.rect.collidelistall(bonuses.sprites()):
             if isinstance(bonuses.sprites()[0], JetPack):
+                self.jetpack_sound.play()
                 self.start_speed = 20
                 self.time = 0
             elif isinstance(bonuses.sprites()[0], Coin):
+                self.coin_sound.play()
                 Saver.save_coins(Saver.get_data('coins') + 1)
             bonuses.sprites()[0].kill()
 

@@ -21,6 +21,10 @@ class Game:
     menu_sound.set_volume(0.1)
     shop_sound = pg.mixer.Sound('../sounds/shop_music.mp3')
     shop_sound.set_volume(0.1)
+    game_sound = pg.mixer.Sound('../sounds/game_sound.mp3')
+    game_sound.set_volume(0.1)
+    end_sound = pg.mixer.Sound('../sounds/end_sound.mp3')
+    end_sound.set_volume(0.1)
 
     def __init__(self):
 
@@ -66,12 +70,20 @@ class Game:
         self.items = pg.sprite.Group()
         price = 100
 
-        for i in range(150, 451, 150):
+        Item((200, 150), 100, '../images/frog/frog_0.png', self.items)
+        Item((400, 300), 200, '../images/coin.png', self.items)
+        Item((200, 450), 300, '../images/coin.png', self.items)
+        Item((400, 150), 400, '../images/frog/birthday_suit/birthday_frogsuit_1.png' , self.items)
+        Item((200, 300), 500, '../images/frog/red_suit/red_frogsuit_1.png', self.items)
+        Item((400, 450), 600, '../images/coin.png', self.items)
+
+        '''for i in range(150, 451, 150):
             for j in range(200, 401, 200):
                 Item((j, i), price, '../images/coin.png', self.items)
-                price += 100
+                price += 100'''
 
     def play(self):
+        self.game_sound.play(-1)
         self.player.refresh(self.sc_size)
         while True:
             self.screen.fill((94, 178, 230))
@@ -98,6 +110,7 @@ class Game:
             if self.player.is_dead:
                 Saver.save_point(self.player.max_height)
                 self.records_insription.refresh()
+                self.game_sound.stop()
                 break
 
             self.points_inscription.change(self.player.max_height)
@@ -165,6 +178,7 @@ class Game:
         self.coins_inscription.change(Saver.get_data('coins'))
 
     def show_results(self):
+        self.end_sound.play(-1)
         while True:
             self.screen.fill((94, 178, 230))
             for event in pg.event.get():
@@ -174,6 +188,7 @@ class Game:
             self.result_inscription.update()
 
             if pg.key.get_pressed()[pg.K_ESCAPE]:
+                self.end_sound.stop()
                 break
 
             pg.display.update()
