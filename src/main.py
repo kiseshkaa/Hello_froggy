@@ -8,7 +8,9 @@ from bird import Bird
 from button import Button, SoundButton
 from inscription import Inscription, CInscription
 from item import Item
-from src.records_board import RecordsBoard
+from records_board import RecordsBoard
+
+from sys import exit
 
 pg.init()
 
