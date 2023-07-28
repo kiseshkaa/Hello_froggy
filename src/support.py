@@ -8,14 +8,14 @@ class Saver:
 
     @staticmethod
     def save_coins(data: int):
-        with open('data/coins.txt', 'w') as file:
+        with open('../data/coins.txt', 'w') as file:
             json.dump(data, file)
 
     @staticmethod
     def save_suits(number, bought, dressed):
         suits = Saver.get_data('suits')
         suits[str(number)] = [bought, dressed]
-        with open('data/suits.txt', 'w') as file:
+        with open('../data/suits.txt', 'w') as file:
             json.dump(suits, file)
 
 
@@ -42,13 +42,13 @@ class Saver:
                 del records[-1]
 
         # Rewriting records
-        with open('data/records.txt', 'w') as file:
+        with open('../data/records.txt', 'w') as file:
             json.dump(records, file)
 
     @staticmethod
-    def get_data(data_type=''):
+    def get_data(data_name=''):
         try:
-            with open(f'data/{data_type}.txt') as file:
+            with open(f'../data/{data_name}.txt') as file:
                 return json.load(file)
         except FileNotFoundError:
             return None
