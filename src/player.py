@@ -104,9 +104,14 @@ class Player(pg.sprite.Sprite):
 
     def change_suit(self):
         statuses = Saver.get_data('suits')
+        default = True
         for key, status in statuses.items():
-            if status[1]:
+            if status[1] and key in self.suits:
                 self.animate_images = self.suits[key]
+                default = False
+
+        if default:
+            self.animate_images = self.suits['1']
 
     def update(self, screen, clouds, bonuses):
         self.move()
