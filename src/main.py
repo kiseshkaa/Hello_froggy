@@ -136,13 +136,11 @@ class Game:
                 else:
                     self.menu_sound.set_volume(0)
 
-
             pg.draw.rect(self.screen, 'seashell3', self.border, 5, 10)
 
             pg.display.update()
             self.FPS.tick(60)
         self.menu_sound.stop()
-
 
     def run_shop(self):
         self.shop_sound.play(-1)
